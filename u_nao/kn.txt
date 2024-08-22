@@ -6,3 +6,19 @@ imread đọc file ảnh và trả về kết quả dưới dạng mảng Numpy:
 - normalize(x,axis,oder): lenh cua chuan (norm), mac dinh la 2: tinh sqrt(cac gia tri trong hang/cot), roi khi chuan hoa se lay xi de chia (phổ biến nhất)
 +oder = 1: tinh tong cac gia tri tuyet doi cua xi, khi chuan hoa lay xi chia, thuong duoc su dụng khi muốn làm cho các giá tị của vector nhỏ hơn nhưng vẫn giữ nguyên mối quan hệ tuyến tính giữa các phần tử.
 +oder = 3: x = maX(|xi|), thường được sử dụng khi quan tâm đến giá trị cực đại trong vector.
+Conv2D:
++ trích xuất đặc trưng từ ảnh đầu vào bằng cách áp dụng bộ lọc (filters) trên các vùng của ảnh. Những đặc trưng này có thể là các đường viền, góc, hoặc các chi tiết phức tạp hơn.
++ giảm độ phức tạp của dữ liệu: bằng cách sử dụng các bộ lọc nhỏ hơn kích thước của ảnh (kernel) -> giảm dữ liệu đầu vào -> giảm tham số cần huấn luyện, do đó tăng hiệu suất và giảm nguy cơ overfitting
+- cách hoạt động:
++ bộ lọc(kernel) trượt qua ảnh đầu vào để thực hiện phép tích chập
++ stride: là bước di chuyển của bộ lọc khi trượt qua ảnh. Strude càng lớn thì hình ảnh sau khi tích chập sẽ cảng nhỏ lại
++ padding: để giữ nguyên kích thước của ảnh sau khi tích chập, padding có thể được thêm vào rìa ảnh.
+ví dụ: 
+Conv2D(32,(3,3), input_shape=(64,64,3))
+trong đó: 
++32 : filters = 32: lớp này sẽ áp dụng 32 bộ lọc lên ảnh đầu vào ( tích chập 32 lần, mỗi lần với 1 bộ lọc riêng lẻ để tạo ra 32 bản đồ đặc trưng giúp mạng neron học được nhiều đặc trưng khác nhau từ ảnh đầu vào)
++kernel (3,3): kích thước mỗi bộ lọc là 3x3
++input_shapr: kích thước đầu vào 64x64 với 3 kênh màu RGB.
+Maxpooling: tạo 1 windown kích thước (axa) để quét qua toàn bộ feature map đầu vào, chọn ra giá trị lớn nhất trong phạm vi và ghi lại trong feature map kết quả -> giảm kích thước
+kernel_initializer='he_uniform' là một tùy chọn khởi tạo trọng số được sử dụng trong các mạng neuron, đặc biệt là trong các lớp tích chập (conv2d) hoặc lớp dày đặc (dense), thường được sử dụng cho các hàm kích hoạt relu hoặc các biến thể của hàm. Mục tiêu đảm bảo các giá trị đầu ra của các neuron trong các lớp không quá lớn hoặc quá nhỏ, giúp cải thiện quá trình lan truyền ngược
+Flatten: làm phẳng , chuyển đổi các tensor 3D hoặc 4D sau lớp tích chập Conv2d thành 1D để đưa dữ liệu vào lớp dày đặc dense, vì lớp dense yêu cầu đầu vào là 1D
