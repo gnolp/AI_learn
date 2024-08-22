@@ -1,0 +1,8 @@
+imread đọc file ảnh và trả về kết quả dưới dạng mảng Numpy:
+-mảng 3 chiều đối với hình ảnh màu (height, width, channels), trong đó 'channels' có giá trị là 3, đại diện có các kênh màu, Blue, Green, red trong thứ thự "BGR".
+- đối với hình ảnh đơn sắc, mảng sẽ có 2 chiều (height, width)
+-fromarray : tạo 1 đối tượng Pillow từ 1 mảng Numpy, mode='RGB': chuyển về chế độ màu RGB.
+-thêm viền các ảnh để thành hình vuông, tránh khi resize bị sai lệch dữ liệu
+- normalize(x,axis,oder): lenh cua chuan (norm), mac dinh la 2: tinh sqrt(cac gia tri trong hang/cot), roi khi chuan hoa se lay xi de chia (phổ biến nhất)
++oder = 1: tinh tong cac gia tri tuyet doi cua xi, khi chuan hoa lay xi chia, thuong duoc su dụng khi muốn làm cho các giá tị của vector nhỏ hơn nhưng vẫn giữ nguyên mối quan hệ tuyến tính giữa các phần tử.
++oder = 3: x = maX(|xi|), thường được sử dụng khi quan tâm đến giá trị cực đại trong vector.
