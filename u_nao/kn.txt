@@ -22,3 +22,8 @@ trong đó:
 Maxpooling: tạo 1 windown kích thước (axa) để quét qua toàn bộ feature map đầu vào, chọn ra giá trị lớn nhất trong phạm vi và ghi lại trong feature map kết quả -> giảm kích thước
 kernel_initializer='he_uniform' là một tùy chọn khởi tạo trọng số được sử dụng trong các mạng neuron, đặc biệt là trong các lớp tích chập (conv2d) hoặc lớp dày đặc (dense), thường được sử dụng cho các hàm kích hoạt relu hoặc các biến thể của hàm. Mục tiêu đảm bảo các giá trị đầu ra của các neuron trong các lớp không quá lớn hoặc quá nhỏ, giúp cải thiện quá trình lan truyền ngược
 Flatten: làm phẳng , chuyển đổi các tensor 3D hoặc 4D sau lớp tích chập Conv2d thành 1D để đưa dữ liệu vào lớp dày đặc dense, vì lớp dense yêu cầu đầu vào là 1D
+Dense(64):
+- hoạt động theo cách mà mỗi neuron trong lớp này liên kết với tất cả các neuron ở lớp trước đó, tính toán một tổng trọng số của các đầu vào, sau đó áp dụng 1 hàm kích hoạt dể tạo đầu ra.
+*tính trọng số của các đầu vào bằng cách nhân từng đầu vào với trọng số tương ứng và cộng thêm 1 giá trị bias.
+công thức: z= w1*x1 + w2*x2 +...+b
+sau đó áp dụng hàm kích hoạt vd sigmoid: output = 1/(1+e^-z)

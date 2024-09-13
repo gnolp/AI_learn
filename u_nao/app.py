@@ -7,6 +7,7 @@ import cv2
 from keras.models import load_model
 from flask import Flask, request, render_template
 from werkzeug.utils import secure_filename
+from PIL import Image,ImageOps
 
 
 app = Flask(__name__)
@@ -26,7 +27,19 @@ def get_className(classNo):
 def getResult(img):
     image=cv2.imread(img)
     image = Image.fromarray(image, 'RGB')
-    image = image.resize((64, 64))
+    max_side = max(image.size)
+    # Tính toán padding
+    left_padding = (max_side - image.width) // 2
+    top_padding = (max_side - image.height) // 2
+    right_padding = max_side - image.width - left_padding
+    bottom_padding = max_side - image.height - top_padding
+
+    # Thêm padding để tạo hình vuông
+    image = ImageOps.expand(image, (left_padding, top_padding, right_padding, bottom_padding), fill=(0, 0, 0)) # Phần thêm sẽ để màu đen
+
+    # Tùy chọn: Thay đổi kích thước hình ảnh thành hình vuông với kích thước mong muốn
+    final_size = (64, 64)
+    image = image.resize(final_size)
     image=np.array(image)
     input_img = np.expand_dims(image, axis=0)
     result=model.predict(input_img)
